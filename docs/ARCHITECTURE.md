@@ -53,6 +53,12 @@ Non-pinned triggers (created **after** all pins): nav highlight + progress bar, 
 - `ScrollTrigger.refresh()` runs on `load`, on `document.fonts.ready`, and whenever a `ResizeObserver` sees `<main>` height or the career track width change. Without this, late-loading fonts made the career pin overlap "How I lead".
 - Width-only resizes > 40px trigger a refresh; height-only changes (mobile URL bar) don't.
 
+## Touch devices
+
+- `ScrollTrigger.normalizeScroll(true)` on touch screens keeps pinned scenes steady while the mobile address bar moves and during momentum scrolling; `ignoreMobileResize` avoids refreshes on height-only resizes.
+- Pinned scenes are longer on mobile (Origins 280%, How I lead 300%) and **snap** to their key moments (the three origin steps, the three principles) with `inertia: false`, so a quick flick never skips a step.
+- Open the site with `#debug` (e.g. `/index.html#debug`) to show a badge explaining whether animations are on, and why not if they are off (libraries, reduced motion, unusual viewport), plus touch/WebGL support and viewport size.
+
 ## Smooth scroll
 
 Lenis runs only when the page is top-level (not inside an iframe) and the pointer is fine (mouse/trackpad). Touch devices keep native scrolling. `window.__lenis` is exposed for debugging and automated tests.

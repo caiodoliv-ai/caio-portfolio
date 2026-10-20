@@ -15,8 +15,26 @@ const D = Math.PI / 180;
 // Animations run only when the libraries loaded and the viewport is a real screen.
 const ANIM = !!(window.gsap && window.ScrollTrigger && window.THREE) && !REDUCED && innerHeight < (screen.height || 2000) * 2;
 document.documentElement.classList.toggle('anim', ANIM);
+const TOUCH = !matchMedia('(pointer: fine)').matches;
+
+// Diagnostics: open the site with #debug to see why animations are on or off.
+if (location.hash === '#debug') {
+  const why = !(window.gsap && window.ScrollTrigger && window.THREE) ? 'libraries not loaded'
+    : REDUCED ? 'device asks for reduced motion' : !ANIM ? 'viewport looks unusual' : 'animations on';
+  let gl = false; try { gl = !!document.createElement('canvas').getContext('webgl'); } catch (e) {}
+  const d = document.createElement('div');
+  d.style.cssText = 'position:fixed;left:8px;bottom:8px;z-index:9999;font:12px/1.4 monospace;background:#1F1E1B;color:#F4F1EA;padding:8px 10px;border-radius:8px;max-width:calc(100% - 16px)';
+  d.textContent = `${why} · touch:${TOUCH} · webgl:${gl} · ${innerWidth}×${innerHeight} (screen ${screen.width}×${screen.height})`;
+  addEventListener('DOMContentLoaded', () => document.body.appendChild(d)); if (document.body) document.body.appendChild(d);
+}
+
 if (ANIM) {
 gsap.registerPlugin(ScrollTrigger);
+// Touch devices: steady pins while the address bar moves and momentum scrolling is on
+ScrollTrigger.config({ ignoreMobileResize: true });
+if (TOUCH) ScrollTrigger.normalizeScroll(true);
+// On touch, let each pinned scene settle on its key moments instead of flying past them
+const snapTo = pts => TOUCH ? { snapTo: pts, inertia: false, directional: false, duration: { min: .25, max: .8 }, delay: .15, ease: 'power1.inOut' } : false;
 
 /* ---------------- smooth scroll ---------------- */
 let lenis = null;
@@ -127,7 +145,8 @@ heroPose();
 
 /* ---------------- PINS FIRST, in page order ---------------- */
 // 02 Origins
-const ot = gsap.timeline({ scrollTrigger: { trigger: '#origins', start: 'top top', end: () => isMobile() ? '+=190%' : '+=260%', pin: true, scrub: 1, invalidateOnRefresh: true } });
+const ot = gsap.timeline({ scrollTrigger: { trigger: '#origins', start: 'top top', end: () => isMobile() ? '+=280%' : '+=260%', pin: true, scrub: 1, anticipatePin: 1, invalidateOnRefresh: true,
+  snap: snapTo([0, .245, .578, .93, 1]) } });   // the three text steps
 gsap.set('.o-step', { y: 30 });
 ot.to(S, { x: 0, y: () => isMobile() ? .3 : .02, scale: () => isMobile() ? .95 : 1.55, lon: -35, lat: -7, idle: 0, labels: 1, duration: 1.2, ease: 'power2.inOut' }, 0)
   .to('[data-step="0"]', { opacity: 1, y: 0, duration: .5 }, .5)
@@ -143,7 +162,7 @@ const mm = gsap.matchMedia();
 mm.add('(min-width: 901px)', () => {
   const track = document.getElementById('track');
   gsap.to(track, { x: () => -(track.scrollWidth - innerWidth), ease: 'none',
-    scrollTrigger: { trigger: '#path', start: 'top top', end: () => '+=' + (track.scrollWidth - innerWidth), pin: true, scrub: 1, invalidateOnRefresh: true } });
+    scrollTrigger: { trigger: '#path', start: 'top top', end: () => '+=' + (track.scrollWidth - innerWidth), pin: true, scrub: 1, anticipatePin: 1, invalidateOnRefresh: true } });
 });
 
 // 05 How I lead — the rider runs the track, principles change at checkpoints
@@ -179,7 +198,8 @@ mm.add('(min-width: 901px)', () => {
   };
   show(0); draw();
   gsap.to(st, { p: 1, ease: 'none', onUpdate: draw,
-    scrollTrigger: { trigger: '#lead', start: 'top top', end: () => isMobile() ? '+=220%' : '+=200%', pin: true, scrub: .6, invalidateOnRefresh: true, onRefresh: draw } });
+    scrollTrigger: { trigger: '#lead', start: 'top top', end: () => isMobile() ? '+=300%' : '+=200%', pin: true, scrub: .6, anticipatePin: 1, invalidateOnRefresh: true, onRefresh: draw,
+      snap: snapTo([0, .22, .58, .93, 1]) } });   // the three principles
 })();
 
 /* ---------------- everything else (after pins, so positions are right) ---------------- */
