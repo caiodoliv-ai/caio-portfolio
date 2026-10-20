@@ -1,33 +1,40 @@
-# Deploy: GitHub → Cloudflare Pages
+# Deploy: GitHub → Cloudflare (Workers static assets)
 
-The site is fully static: no build step. Cloudflare Pages serves the repository root.
+The site is fully static: no build step. Cloudflare serves the repository root as static assets.
+
+**Live:** https://caio-portfolio.caiodoliv.workers.dev
 
 ## 1. Repository
 
 - Repo: `caiodoliv-ai/caio-portfolio` (private while in draft).
-- Default branch: `main`. Every push to `main` redeploys production; other branches get preview URLs.
+- Default branch: `main`. Every push to `main` redeploys production automatically (about a minute).
 
-## 2. Connect Cloudflare Pages
+## 2. Cloudflare project (already set up)
 
-1. Cloudflare dashboard → **Workers & Pages** → **Create** → **Pages** → **Connect to Git**.
-2. Authorise GitHub and pick `caio-portfolio` (Cloudflare can read private repos once authorised).
-3. Build settings:
-   - Framework preset: **None**
-   - Build command: *(leave empty)*
-   - Build output directory: `/`
-4. **Save and Deploy.** You get a `https://caio-portfolio.pages.dev` URL.
+Created from **Workers & Pages → Create application → Import a repository** (GitHub app: Cloudflare Workers and Pages, with access to `caio-portfolio`). Current build settings:
 
-`_headers` in the repo root sets caching (long for `assets/`, short for HTML) and basic security headers.
+| Setting | Value |
+|---|---|
+| Build command | *(none)* |
+| Deploy command | `npx wrangler deploy` |
+| Root directory | `/` |
+| Production branch | `main` |
+
+To watch a deploy: Cloudflare dashboard → **Workers & Pages → caio-portfolio → Deployments**. Use **Copy build log** if something fails.
+
+`_headers` in the repo root sets caching (long for `assets/`, short for HTML) and basic security headers; Workers static assets honour it like Pages did.
+
+> The `workers.dev` address is public to anyone who has the link, even though the repo is private. Don't share it until the placeholders are filled. To lock it, use **Settings → Domains & Routes** to disable the workers.dev route, or protect it with Cloudflare Access.
 
 ## 3. Custom domain (optional)
 
 1. Buy or use a domain (e.g. `caiodeoliveira.com`).
-2. Pages project → **Custom domains** → **Set up a domain** → follow the DNS steps (automatic if the domain is on Cloudflare).
+2. Project → **Settings → Domains & Routes → Add → Custom domain** → follow the DNS steps (automatic if the domain is on Cloudflare).
 3. Update `og:url` in `index.html` and the `Sitemap` line in `robots.txt`.
 
 ## 4. Analytics (optional)
 
-Pages project → **Metrics** → enable **Web Analytics**. Cookie-free, so no consent banner is needed.
+Cloudflare dashboard → **Web Analytics** → add the site (or enable it on the custom domain). Cookie-free, so no consent banner is needed.
 
 ## 5. Going public checklist
 

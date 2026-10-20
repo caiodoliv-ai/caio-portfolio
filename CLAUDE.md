@@ -40,7 +40,7 @@ Check at least: 1440×900, 1280×720, 1024×768, 820×1180, 390×844, 360×640, 
 | Scene timing, pins, globe pose | `assets/js/main.js` (sections 3–5) |
 | Globe land dots | `tools/generate-globe-data.mjs` → regenerates `assets/js/globe-data.js` |
 | Open placeholders | `docs/CONTENT.md` |
-| Deployment | `docs/DEPLOY.md` |
+| Deployment | `docs/DEPLOY.md` (push to `main` = live in ~1 min) |
 
 ## Commit style
 
