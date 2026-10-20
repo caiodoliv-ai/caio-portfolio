@@ -1,0 +1,67 @@
+# Content guide
+
+Every text on the site lives in `index.html` (and `cv.html` for the classic CV). This document maps the sections, lists the open placeholders and records the facts the site must stay consistent with.
+
+## Sections of `index.html`
+
+| # | Section (id) | What it says | Key elements |
+|---|---|---|---|
+| 01 | Hero (`#hero`) | *Always in motion.* + positioning line | Meta strip: Verona · 7+ yrs · Sport retail & aviation |
+| 02 | Origins (`#origins`) | João Pessoa → Italy (2002) → two cultures | Three text steps, distance counter (7,400 km) |
+| 03 | Numbers (`#numbers`) | Seven years of building brands that perform | 7+ · 100K+ · 5+ · 4 · XX+ countries |
+| 04 | Career (`#path`) | *The path so far.* — two industries, one method | Five cards, newest first |
+| 05 | How I lead (`#lead`) | What racing taught me about leading | Three principles + two episode cards |
+| 06 | Education (`#education`) | Degrees, thesis, languages | Rotating greeting: Ciao · Olá · Hello · Hola |
+| 07 | Radar (`#radar`) | On my radar — continuous learning | Four signals |
+| 08 | Right now (`#now`) | Let's build what's next | Now · Learning · Exploring, personal note, contacts |
+
+## Open placeholders
+
+Search the code for `PLACEHOLDER` to find each one.
+
+| Where | What is needed | Notes |
+|---|---|---|
+| Numbers → last stat | Number of countries visited (`XX+`) | Replace `XX`, remove the `todo` class from the `<b>` |
+| Career → Digital Marketing Specialist | One key result with a number | e.g. "+X% brand lift on Van Rysel". Use a variation (%) if absolute figures are confidential |
+| Career → Fujitsu Belgium | 1–2 lines on what you did | Bullet list like the other cards |
+| How I lead → episodes | A race moment + the same lesson at work | 2–3 sentences each, first person |
+| Radar → next signal | What you're exploring right now | e.g. a course, a tool, a project |
+| Right now → photo | Portrait, 4:5, warm natural light | Save as `assets/img/portrait.jpg` (≈1200×1500, < 300 KB) and replace the `.photo` placeholder with an `<img>` |
+| `<head>` | Final domain and social preview image | `og:url`, `og:image` (1200×630 → `assets/img/og-image.jpg`) |
+
+## Texts written as drafts (to validate)
+
+- The three leadership principles: *Win at the gate*, *Pick your line*, *Get up first* (track line + work line).
+- The closing note in "Right now".
+- Origins step 3: *Curious about everywhere else.*
+- Career card numbers derived from the CV/portfolio: "3 brands", "5 channels", "5 months abroad".
+
+## Facts of record (must match the CV)
+
+| Item | Value |
+|---|---|
+| Born | João Pessoa, Brazil |
+| Moved to Italy | 2002 |
+| Based | Verona, Italy |
+| Air Dolomiti (Lufthansa Group) | Marketing & Communication Specialist · May 2024 – present |
+| Decathlon Italia | Digital Marketing Specialist · Mar 2022 – Apr 2024 |
+| Decathlon Italia | Communication Specialist, Internal & DE&I · Jan 2021 – Mar 2022 |
+| Decathlon Italia | Sport Leader, Retail Team Lead · Nov 2014 – Feb 2022 |
+| Fujitsu Belgium | Marketing & Communication Intern · May – Sep 2021 (not on the PDF CV) |
+| TEDxVerona | Marketing & Communication Coordinator, volunteer · Sep 2022 – Jan 2024 (not on the PDF CV) |
+| Master's | Digital Communication & Marketing, Universitas Mercatorum · 2024 – present |
+| Bachelor's | Communication & Media, IUSVE Venice · 2018 – 2022 · thesis R.E.D. |
+| Course | Psychology & the Science of Well-Being, Yale (online) · 2020 |
+| Languages | Italian (native), Portuguese (native), English (C1), Spanish (C1) |
+| Key numbers | 7+ years · 100K+ email subscribers · 5+ co-marketing partners |
+| BMX | Semi-professional BMX racing · 2009–2021 · Italy & Europe · 12 seasons |
+| Contacts shown | caiodoliv@gmail.com · linkedin.com/in/caiodoliv (no phone, no address) |
+
+The degree grade is intentionally **not** shown.
+
+## Writing guidelines
+
+- Short sentences, first person, concrete. One idea per line.
+- Numbers beat adjectives: "100K+ subscribers" rather than "large audience".
+- Neutral vocabulary: no aviation jargon, no "open to work" signals.
+- Keep headings to a few words with one italic accent word (`<em>`).
