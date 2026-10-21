@@ -1,6 +1,6 @@
 # Caio de Oliveira — personal site
 
-> **Always in motion.** I connect brand and performance, across industries, channels and cultures.
+> **Always in motion.** I lead integrated marketing that connects brand and performance, aligning teams, partners and data around one goal.
 
 A one-page, scroll-driven personal site that tells my story as a sequence of scenes: from João Pessoa (Brazil) to Verona (Italy), through my career, the way I lead, what I'm learning and what I'm working on right now. A classic, printable CV lives at `cv.html`.
 

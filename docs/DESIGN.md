@@ -5,8 +5,9 @@
 | | |
 |---|---|
 | **Claim** | *Always in motion.* |
-| **Positioning** | I connect brand and performance, across industries, channels and cultures. |
-| **Proof** | Two industries (sport retail, aviation), one method · 100K+ subscribers · 5+ partners · C-level reporting · 4 languages |
+| **Positioning** | I lead integrated marketing that connects brand and performance, aligning teams, partners and data around one goal. |
+| **Proof** | Two industries (sport retail, aviation), one method · €2M+ budgets · 6+ cross-functional teams led · 100K+ audience · 5+ partners · C-level reporting · 4 languages |
+| **Unspoken goal** | Show readiness to lead a team through scope and proof, never by asking for it. |
 | **Story** | Born where the sun rises first (João Pessoa) → made Italy home (2002) → the path so far → how I lead (BMX) → right now |
 | **Personality** | Warm, precise, curious, energetic. Human before corporate. |
 
