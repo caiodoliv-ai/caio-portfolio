@@ -26,8 +26,7 @@ Search the code for `PLACEHOLDER` to find each one.
 | Career → Fujitsu Belgium | 1–2 lines on what you did | Bullet list like the other cards |
 | How I lead → episodes | A race moment + the same lesson at work | 2–3 sentences each, first person |
 | Radar → next signal | What you're exploring right now | e.g. a course, a tool, a project |
-| Right now → photo | Portrait, 4:5, warm natural light | Save as `assets/img/portrait.jpg` (≈1200×1500, < 300 KB) and replace the `.photo` placeholder with an `<img>` |
-| `<head>` | Final domain and social preview image | `og:url`, `og:image` (1200×630 → `assets/img/og-image.jpg`) |
+| `<head>` | Final domain | Update `og:url` and the `og:image` URL when the custom domain is live |
 
 ## Texts written as drafts (to validate)
 

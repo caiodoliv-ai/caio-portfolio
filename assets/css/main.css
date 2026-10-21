@@ -202,6 +202,9 @@
   .col p{font-size:14.5px;color:var(--ink-2)}
   .now .note{font:400 clamp(20px,1.8vw,26px)/1.4 var(--serif);color:var(--ink-2);max-width:620px;margin-top:34px}
   .now .ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+  .portrait{margin:0}
+  .portrait img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:24px;background:var(--paper-2);filter:saturate(.96) sepia(.04)}
+  .portrait figcaption{font:500 11px var(--mono);letter-spacing:.12em;color:var(--muted);margin-top:12px;text-transform:uppercase}
   .photo{aspect-ratio:4/5;border-radius:24px;border:1.5px dashed var(--clay);
     background:repeating-linear-gradient(135deg,transparent 0 14px,rgba(200,100,59,.06) 14px 15px),var(--paper-2);
     display:grid;place-items:center;text-align:center;padding:24px}
@@ -256,6 +259,7 @@
     .sig{grid-template-columns:1fr;gap:4px}
     .scope{max-width:300px;margin:0 auto}
     .photo{max-width:360px}
+    .portrait{max-width:420px}
   }
   @media (min-width:901px){.track-svg{max-height:34vh}}
   @media (max-height:760px){.scroll-cue{display:none}}
