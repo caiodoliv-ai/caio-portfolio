@@ -8,7 +8,7 @@ Every text on the site lives in `index.html` (and `cv.html` for the classic CV).
 |---|---|---|---|
 | 01 | Hero (`#hero`) | *Always in motion.* + positioning line | Meta strip: Verona · 7+ yrs · Sport retail & aviation |
 | 02 | Origins (`#origins`) | João Pessoa → Italy (2002) → two cultures | Three text steps, distance counter (7,400 km) |
-| 03 | Numbers (`#numbers`) | Seven years of building brands that perform | 7+ · 100K+ · 5+ · 4 · XX+ countries |
+| 03 | Numbers (`#numbers`) | A wider scope every time | 7+ years · €2M+ budgets · 6+ cross-functional teams · 100K+ audience, plus the scope line Team → Organisation → Brands & budget → Business |
 | 04 | Career (`#path`) | *The path so far.* — two industries, one method | Five cards, newest first |
 | 05 | How I lead (`#lead`) | What racing taught me about leading | Three principles + two episode cards |
 | 06 | Education (`#education`) | Degrees, thesis, languages | Rotating greeting: Ciao · Olá · Hello · Hola |
@@ -21,7 +21,7 @@ Search the code for `PLACEHOLDER` to find each one.
 
 | Where | What is needed | Notes |
 |---|---|---|
-| Numbers → last stat | Number of countries visited (`XX+`) | Replace `XX`, remove the `todo` class from the `<b>` |
+| Origins → step 3 | Number of countries visited (`XX+`) | Replace the placeholder span with the number |
 | Career → Digital Marketing Specialist | One key result with a number | e.g. "+X% brand lift on Van Rysel". Use a variation (%) if absolute figures are confidential |
 | Career → Fujitsu Belgium | 1–2 lines on what you did | Bullet list like the other cards |
 | How I lead → episodes | A race moment + the same lesson at work | 2–3 sentences each, first person |
@@ -53,7 +53,8 @@ Search the code for `PLACEHOLDER` to find each one.
 | Bachelor's | Communication & Media, IUSVE Venice · 2018 – 2022 · thesis R.E.D. |
 | Course | Psychology & the Science of Well-Being, Yale (online) · 2020 |
 | Languages | Italian (native), Portuguese (native), English (C1), Spanish (C1) |
-| Key numbers | 7+ years · 100K+ email subscribers · 5+ co-marketing partners |
+| Key numbers | 7+ years in marketing · €2M+ marketing/media budgets managed (Decathlon era) · 6+ cross-functional teams led · 100K+ email subscribers · 5+ co-marketing partners |
+| Leadership | Functional, cross-functional leadership across teams of mixed seniority |
 | BMX | Semi-professional BMX racing · 2009–2021 · Italy & Europe · 12 seasons |
 | Contacts shown | caiodoliv@gmail.com · linkedin.com/in/caiodoliv (no phone, no address) |
 
@@ -64,4 +65,6 @@ The degree grade is intentionally **not** shown.
 - Short sentences, first person, concrete. One idea per line.
 - Numbers beat adjectives: "100K+ subscribers" rather than "large audience".
 - Neutral vocabulary: no aviation jargon, no "open to work" signals.
+- Show readiness to lead through **scope** (budgets, teams, partners, C-level reporting), never by stating a wish for a manager role.
+- Leadership is described as **functional / cross-functional**. Don't write "team of X managed", "direct reports" or "reporting to me".
 - Keep headings to a few words with one italic accent word (`<em>`).

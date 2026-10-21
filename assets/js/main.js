@@ -239,11 +239,14 @@ if (!REDUCED) {
 
 // counters
 document.querySelectorAll('[data-count]').forEach(el => {
-  const n = +el.dataset.count, suf = el.dataset.suffix || '', plus = !el.hasAttribute('data-plain');
-  const o = { v: 0 }; el.innerHTML = '0';
+  const n = +el.dataset.count, pre = el.dataset.prefix || '', suf = el.dataset.suffix || '', plus = !el.hasAttribute('data-plain');
+  const o = { v: 0 }; el.innerHTML = pre + '0' + suf;
   ScrollTrigger.create({ trigger: el, start: 'top 88%', once: true, onEnter: () =>
-    gsap.to(o, { v: n, duration: 1.8, ease: 'power2.out', onUpdate: () => el.innerHTML = Math.round(o.v) + suf + (plus ? '<sup>+</sup>' : '') }) });
+    gsap.to(o, { v: n, duration: 1.8, ease: 'power2.out', onUpdate: () => el.innerHTML = pre + Math.round(o.v) + suf + (plus ? '<sup>+</sup>' : '') }) });
 });
+
+// scope bars grow from the baseline, one after the other
+gsap.from('.scopeline i', { scaleY: () => isMobile() ? 1 : 0, scaleX: () => isMobile() ? 0 : 1, duration: 1.1, ease: 'power3.out', stagger: .15, scrollTrigger: { trigger: '.scopeline', start: 'top 85%' } });
 
 // the journey continues — dotted line draws towards the contacts
 (() => {

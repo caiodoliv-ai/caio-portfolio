@@ -13,6 +13,7 @@ This is Caio de Oliveira's personal site: a static, scroll-driven one-page site 
    - Language is **industry-neutral**. No aviation metaphors (flights, boarding passes, gates, airport codes). Air Dolomiti is one experience in the path, not the frame.
    - **No public job-hunting signals.** No "open to work", "looking for a new role", target cities or "your company / boarding". The closing section is "Right now".
    - No phone number or home address anywhere.
+   - Signal leadership through **scope** (budgets, cross-functional teams, partners, C-level reporting). Leadership is functional: never write "direct reports", "team of X managed" or similar.
 7. **Tone:** warm, editorial, professional. English (UK spelling is fine, keep it consistent).
 
 ## Scroll scenes: how not to break them
