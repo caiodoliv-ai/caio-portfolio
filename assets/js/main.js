@@ -329,87 +329,19 @@ requestAnimationFrame(frame);
 } // end ANIM
 
 /* =================================================================
-   7. Mobile mode — reveal on view, no pinned scenes
+   7. Phone mode — "the CV in your pocket": one column, no scenes.
+      Only a light fade on section heads and "Details" on career items.
    ================================================================= */
 if (MOBILE) {
-  const $ = (s, r = document) => [...r.querySelectorAll(s)];
-  const once = (els, fn, margin = '0px 0px -12% 0px') => {
-    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { io.unobserve(e.target); fn(e.target); } }), { rootMargin: margin });
-    els.forEach(el => io.observe(el));
-  };
-  const ease = t => 1 - Math.pow(1 - t, 3);
-  const tween = (ms, step, done) => { const t0 = performance.now(); const f = now => { const k = Math.min(1, (now - t0) / ms); step(ease(k)); k < 1 ? requestAnimationFrame(f) : done && done(); }; requestAnimationFrame(f); };
+  const heads = [...document.querySelectorAll('main h2, main section > .eyebrow, .path-head .eyebrow, .lead-head .eyebrow')];
+  heads.forEach(h => h.classList.add('fade'));
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
+  heads.forEach(h => io.observe(h));
 
-  // reveals, with a small stagger between siblings
-  const items = $('.rv, .o-title, .o-map, .o-step, .o-hud, .scopeline li, .tl-item, .sig, .ep, .hero-photo');
-  items.forEach(el => {
-    el.classList.add('rvm');
+  document.querySelectorAll('#track .spec').forEach(card => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'more'; b.textContent = 'Details +'; b.setAttribute('aria-expanded', 'false');
+    b.addEventListener('click', () => { const open = card.classList.toggle('open'); b.textContent = open ? 'Less −' : 'Details +'; b.setAttribute('aria-expanded', String(open)); });
+    card.appendChild(b);
   });
-  requestAnimationFrame(() => $('.hero .rvm').forEach(el => el.classList.add('in')));
-  once(items.filter(el => !el.closest('.hero')), el => el.classList.add('in'));
-
-  // counters
-  once($('[data-count]'), el => {
-    const n = +el.dataset.count, pre = el.dataset.prefix || '', suf = el.dataset.suffix || '', plus = !el.hasAttribute('data-plain');
-    tween(1400, k => el.innerHTML = pre + Math.round(n * k) + suf + (plus ? '<sup>+</sup>' : ''));
-  });
-
-  // origins: the route draws and the distance counts up
-  const km = document.getElementById('km');
-  once($('.o-map'), map => {
-    map.classList.add('draw');
-    tween(2000, k => km.textContent = Math.round(7400 * k).toLocaleString('en-US') + ' km');
-  });
-
-  // greeting rotator
-  const words = $('#hello span'); let w = 0;
-  words.forEach((s, i) => s.classList.toggle('on', i === 0));
-  setInterval(() => {
-    words[w].classList.remove('on'); words[w].classList.add('out');
-    const prev = words[w]; setTimeout(() => prev.classList.remove('out'), 700);
-    w = (w + 1) % words.length; words[w].classList.add('on');
-  }, 1800);
-
-  // how I lead: the rider runs the whole track once, checkpoints light up
-  const path = document.getElementById('trackLine'), rider = document.getElementById('rider');
-  if (path && rider) {
-    const L = path.getTotalLength(), CP = [.08, .47, .83], g = document.getElementById('checkpoints');
-    CP.forEach((f, i) => { const p = path.getPointAtLength(f * L);
-      g.insertAdjacentHTML('beforeend', `<g transform="translate(${p.x} ${p.y + 34})"><circle r="15" fill="#F4F1EA" stroke="#C8643B" stroke-width="2" id="cp${i}"/><text y="4.5" fill="#C8643B">0${i + 1}</text></g>`); });
-    path.style.strokeDasharray = L; path.style.strokeDashoffset = L;
-    const at = k => { const l = k * L, a = path.getPointAtLength(l), b = path.getPointAtLength(Math.min(l + 2, L));
-      rider.setAttribute('transform', `translate(${a.x} ${a.y}) rotate(${Math.atan2(b.y - a.y, b.x - a.x) / D})`);
-      path.style.strokeDashoffset = L - l;
-      CP.forEach((f, i) => document.getElementById('cp' + i).setAttribute('fill', k >= f ? '#C8643B' : '#F4F1EA')); };
-    at(0);
-    once($('#bmxView'), () => tween(3200, at), '0px 0px -25% 0px');
-  }
-
-  // closing line draws towards the contacts
-  const jr = document.getElementById('jcr'), jl = document.getElementById('journeyLine'), jd = document.getElementById('journeyDot');
-  if (jr && jl) { const JL = jl.getTotalLength(); jr.setAttribute('width', 0);
-    once($('.journey'), () => tween(1800, k => { const p = jl.getPointAtLength(k * JL); jr.setAttribute('width', p.x + 10); jd.setAttribute('cx', p.x); jd.setAttribute('cy', p.y); })); }
-
-  // swipe carousels get page dots (highlights, career, principles)
-  [['.stats', '.stat'], ['#track', '.spec'], ['#principles', '.pr']].forEach(([sel, item]) => {
-    const row = document.querySelector(sel); if (!row) return;
-    const cards = $(item, row); if (cards.length < 2) return;
-    const bar = document.createElement('div'); bar.className = 'dotsbar'; bar.setAttribute('aria-hidden', 'true');
-    cards.forEach(() => bar.appendChild(document.createElement('i')));
-    row.insertAdjacentElement('afterend', bar);
-    const dots = [...bar.children];
-    const update = () => { const mid = row.scrollLeft + row.clientWidth / 2;
-      let best = 0, bd = 1e9; cards.forEach((c, n) => { const d = Math.abs(c.offsetLeft + c.offsetWidth / 2 - mid); if (d < bd) { bd = d; best = n; } });
-      dots.forEach((d, n) => d.classList.toggle('on', n === best)); };
-    row.addEventListener('scroll', () => requestAnimationFrame(update), { passive: true }); update();
-  });
-
-  // section bar: highlight the section on screen and keep its chip in view
-  const chips = $('.subnav a');
-  const secs = chips.map(a => document.querySelector(a.getAttribute('href')));
-  const spy = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return;
-    const n = secs.indexOf(e.target); chips.forEach((c, m) => c.classList.toggle('on', m === n));
-    chips[n] && chips[n].scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' }); }), { rootMargin: '-45% 0px -50% 0px' });
-  secs.forEach(s => s && spy.observe(s));
-  addEventListener('scroll', () => document.body.classList.toggle('night', (() => { const r = document.getElementById('origins').getBoundingClientRect(); return r.top < innerHeight * .5 && r.bottom > innerHeight * .5; })()), { passive: true });
 }

@@ -58,7 +58,7 @@ Non-pinned triggers (created **after** all pins): nav highlight + progress bar, 
 | Mode | When | What runs |
 |---|---|---|
 | `html.anim` | Width > 900px, libraries loaded, motion allowed | Pinned GSAP scenes, globe through Origins, Lenis smooth scroll on mouse devices |
-| `html.m` | Width ≤ 900px, motion allowed, IntersectionObserver available | Apple-style product page: no pins and no globe. Centred section heads, a sticky section bar, portrait as hero image, swipeable highlight / career / principle cards with page dots, big callout numbers. Light effects only: fade-up on section heads, counters, the Origins route drawing with the km counter, the BMX rider running the track once, scope bars, greeting rotator |
+| `html.m` | Width ≤ 900px, motion allowed | "The CV in your pocket": one column, seven short blocks (hero with avatar, origins band, 2×2 numbers, career list with Details toggles, leadership principles as a numbered list, education, right now + contacts). No globe, no scenes, Radar hidden. Only a light fade on section heads |
 | neither | Reduced motion, JavaScript off, libraries missing | Static layout under `html:not(.anim)`; everything readable |
 
 Pinned scroll-scrubbed scenes proved fragile on real phones (momentum scrolling, address bar), so phones get the lighter `m` mode by design. Tablets and small laptops above 900px keep the desktop scenes; on touch screens those use `normalizeScroll` and snapping.
