@@ -24,6 +24,10 @@ This is Caio de Oliveira's personal site: a static, scroll-driven one-page site 
 - Use `invalidateOnRefresh: true` and function-based values for anything that depends on viewport size.
 - Phones (≤ 900px) don't use pins at all: they get `html.m` mode, an Apple-style product page (centred heads, section bar, swipe cards with dots, light fade-ups, counters, route map, rider run) on top of the static layout. **Desktop must stay unchanged when editing phone styles**: put phone rules inside the PHONE block of `main.css`. See `docs/ARCHITECTURE.md` → Motion modes. Phone spacing lives in the "phone spacing" block of `main.css`.
 
+## Caching (important)
+
+Phones keep old files aggressively. `_headers` makes our own CSS/JS revalidate on every visit, and every `<link>`/`<script>` to `main.css`, `cv.css` and `main.js` carries a `?v=YYYYMMDDHHMM` version: **bump it in `index.html` and `cv.html` whenever you change those files**, or some visitors will see new HTML with old styles.
+
 ## How to test
 
 ```bash

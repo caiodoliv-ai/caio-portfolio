@@ -1,4 +1,5 @@
-# Cloudflare Pages headers — https://developers.cloudflare.com/pages/configuration/headers/
+# Cloudflare headers — https://developers.cloudflare.com/workers/static-assets/headers/
+# Rules must not overlap on Cache-Control (matching values get joined).
 
 /*
   X-Content-Type-Options: nosniff
@@ -6,11 +7,22 @@
   Permissions-Policy: camera=(), microphone=(), geolocation=()
   X-Frame-Options: SAMEORIGIN
 
-/assets/*
-  Cache-Control: public, max-age=604800
+# Our own CSS/JS change often: always revalidate (cheap 304 when unchanged)
+/assets/css/*
+  Cache-Control: public, max-age=0, must-revalidate
 
+/assets/js/main.js
+  Cache-Control: public, max-age=0, must-revalidate
+
+/assets/js/globe-data.js
+  Cache-Control: public, max-age=86400
+
+# Pinned third-party libraries never change at the same URL
 /assets/js/vendor/*
   Cache-Control: public, max-age=31536000, immutable
+
+/assets/img/*
+  Cache-Control: public, max-age=604800
 
 /*.html
   Cache-Control: public, max-age=0, must-revalidate
