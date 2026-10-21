@@ -21,9 +21,6 @@ Search the code for `PLACEHOLDER` to find each one.
 
 | Where | What is needed | Notes |
 |---|---|---|
-| Origins → step 3 | Number of countries visited (`XX+`) | Replace the placeholder span with the number |
-| Career → Digital Marketing Specialist | One key result with a number | e.g. "+X% brand lift on Van Rysel". Use a variation (%) if absolute figures are confidential |
-| Career → Fujitsu Belgium | 1–2 lines on what you did | Bullet list like the other cards |
 | How I lead → episodes | A race moment + the same lesson at work | 2–3 sentences each, first person |
 | Radar → next signal | What you're exploring right now | e.g. a course, a tool, a project |
 | `<head>` | Final domain | Update `og:url` and the `og:image` URL when the custom domain is live |
@@ -46,7 +43,9 @@ Search the code for `PLACEHOLDER` to find each one.
 | Decathlon Italia | Digital Marketing Specialist · Mar 2022 – Apr 2024 |
 | Decathlon Italia | Communication Specialist, Internal & DE&I · Jan 2021 – Mar 2022 |
 | Decathlon Italia | Sport Leader, Retail Team Lead · Nov 2014 – Feb 2022 |
-| Fujitsu Belgium | Marketing & Communication Intern · May – Sep 2021 (not on the PDF CV) |
+| Fujitsu Belgium | Marketing & Communication Intern · May – Sep 2021 (not on the PDF CV) · branding/communication audit with recommendations for HR campaigns; social content for 3 HR pillars (Wellbeing, Talent Management, Consulting) |
+| Countries visited | 20+ |
+| Decathlon highlight | Italian digital and media strategy for the global launch of the Elops 920 E e-bike (from the 2024 portfolio). No numeric result yet |
 | TEDxVerona | Marketing & Communication Coordinator, volunteer · Sep 2022 – Jan 2024 (not on the PDF CV) |
 | Master's | Digital Communication & Marketing, Universitas Mercatorum · 2024 – present |
 | Bachelor's | Communication & Media, IUSVE Venice · 2018 – 2022 · thesis R.E.D. |
