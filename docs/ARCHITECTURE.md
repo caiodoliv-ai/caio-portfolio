@@ -58,7 +58,7 @@ Non-pinned triggers (created **after** all pins): nav highlight + progress bar, 
 | Mode | When | What runs |
 |---|---|---|
 | `html.anim` | Width > 900px, libraries loaded, motion allowed | Pinned GSAP scenes, globe through Origins, Lenis smooth scroll on mouse devices |
-| `html.m` | Width ≤ 900px, motion allowed, IntersectionObserver available | No pins. The static layout plus light effects: reveal on view with a small stagger, counters, the Origins route map drawing with the km counter, greeting rotator, the BMX rider running the whole track once, scope bars, closing line. A small auto-rotating globe sits in the hero and fades out on scroll (`html.m-globe`) |
+| `html.m` | Width ≤ 900px, motion allowed, IntersectionObserver available | Apple-style product page: no pins and no globe. Centred section heads, a sticky section bar, portrait as hero image, swipeable highlight / career / principle cards with page dots, big callout numbers. Light effects only: fade-up on section heads, counters, the Origins route drawing with the km counter, the BMX rider running the track once, scope bars, greeting rotator |
 | neither | Reduced motion, JavaScript off, libraries missing | Static layout under `html:not(.anim)`; everything readable |
 
 Pinned scroll-scrubbed scenes proved fragile on real phones (momentum scrolling, address bar), so phones get the lighter `m` mode by design. Tablets and small laptops above 900px keep the desktop scenes; on touch screens those use `normalizeScroll` and snapping.

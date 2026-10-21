@@ -341,11 +341,9 @@ if (MOBILE) {
   const tween = (ms, step, done) => { const t0 = performance.now(); const f = now => { const k = Math.min(1, (now - t0) / ms); step(ease(k)); k < 1 ? requestAnimationFrame(f) : done && done(); }; requestAnimationFrame(f); };
 
   // reveals, with a small stagger between siblings
-  const items = $('.rv, .o-title, .o-map, .o-step, .o-hud, .stat, .scopeline li, .tl-item, .lang, .sig, .col, .pr, .ep');
+  const items = $('.rv, .o-title, .o-map, .o-step, .o-hud, .scopeline li, .tl-item, .sig, .ep, .hero-photo');
   items.forEach(el => {
     el.classList.add('rvm');
-    const sibs = [...el.parentElement.children].filter(c => c.classList.contains('rvm'));
-    el.style.transitionDelay = (Math.max(0, sibs.indexOf(el)) % 4) * 90 + 'ms';
   });
   requestAnimationFrame(() => $('.hero .rvm').forEach(el => el.classList.add('in')));
   once(items.filter(el => !el.closest('.hero')), el => el.classList.add('in'));
@@ -392,31 +390,26 @@ if (MOBILE) {
   if (jr && jl) { const JL = jl.getTotalLength(); jr.setAttribute('width', 0);
     once($('.journey'), () => tween(1800, k => { const p = jl.getPointAtLength(k * JL); jr.setAttribute('width', p.x + 10); jd.setAttribute('cx', p.x); jd.setAttribute('cy', p.y); })); }
 
-  // small globe in the hero, fading out as you scroll
-  if (window.THREE && window.GLOBE_LAND) try {
-    const canvas = document.getElementById('globe');
-    const r = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-    r.setPixelRatio(Math.min(devicePixelRatio, 2));
-    const sc = new THREE.Scene(), cam = new THREE.PerspectiveCamera(32, 1, .1, 100); cam.position.set(0, 0, 14);
-    const tilt = new THREE.Group(), spin = new THREE.Group(); tilt.add(spin); sc.add(tilt);
-    const R = 2, ll = (lat, lon, rr = R) => { const p = (90 - lat) * D, t = (lon + 180) * D; return new THREE.Vector3(-rr * Math.sin(p) * Math.cos(t), rr * Math.cos(p), rr * Math.sin(p) * Math.sin(t)); };
-    spin.add(new THREE.Mesh(new THREE.SphereGeometry(R * .985, 48, 36), new THREE.MeshBasicMaterial({ color: 0xEBE6DB })));
-    const c2 = document.createElement('canvas'); c2.width = c2.height = 64; const x = c2.getContext('2d'); x.beginPath(); x.arc(32, 32, 28, 0, 7); x.fillStyle = '#fff'; x.fill();
-    const pts = [], LAND = window.GLOBE_LAND;
-    for (let i = 0; i < LAND.length; i += 6) { const v = ll(parseInt(LAND.slice(i, i + 3), 36) / 10 - 90, parseInt(LAND.slice(i + 3, i + 6), 36) / 10 - 180, R * 1.002); pts.push(v.x, v.y, v.z); }
-    const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3));
-    spin.add(new THREE.Points(g, new THREE.PointsMaterial({ size: .06, map: new THREE.CanvasTexture(c2), transparent: true, alphaTest: .4, color: 0xB3A794 })));
-    const m = new THREE.Mesh(new THREE.SphereGeometry(.06, 16, 12), new THREE.MeshBasicMaterial({ color: 0xC8643B })); m.position.copy(ll(-7.12, -34.86, R * 1.01)); spin.add(m);
-    tilt.rotation.x = 8 * D;
-    const size = () => { r.setSize(innerWidth, innerHeight, false); cam.aspect = innerWidth / innerHeight; cam.updateProjectionMatrix();
-      const h = Math.tan(16 * D) * 14, wv = h * cam.aspect; tilt.position.set(0, h * .5, 0); tilt.scale.setScalar(Math.min(1, wv / 2.2)); };
-    size(); addEventListener('resize', size);
-    let lon = -20, last = performance.now();
-    const frame = now => { const dt = Math.min((now - last) / 1000, .05); last = now;
-      const op = Math.max(0, 1 - scrollY / (innerHeight * .55)); canvas.style.opacity = op;
-      if (op > 0) { lon += dt * 6; spin.rotation.y = -Math.PI / 2 - lon * D; r.render(sc, cam); }
-      requestAnimationFrame(frame); };
-    requestAnimationFrame(frame);
-    document.documentElement.classList.add('m-globe');
-  } catch (e) { /* no WebGL: the hero simply has no globe */ }
+  // swipe carousels get page dots (highlights, career, principles)
+  [['.stats', '.stat'], ['#track', '.spec'], ['#principles', '.pr']].forEach(([sel, item]) => {
+    const row = document.querySelector(sel); if (!row) return;
+    const cards = $(item, row); if (cards.length < 2) return;
+    const bar = document.createElement('div'); bar.className = 'dotsbar'; bar.setAttribute('aria-hidden', 'true');
+    cards.forEach(() => bar.appendChild(document.createElement('i')));
+    row.insertAdjacentElement('afterend', bar);
+    const dots = [...bar.children];
+    const update = () => { const mid = row.scrollLeft + row.clientWidth / 2;
+      let best = 0, bd = 1e9; cards.forEach((c, n) => { const d = Math.abs(c.offsetLeft + c.offsetWidth / 2 - mid); if (d < bd) { bd = d; best = n; } });
+      dots.forEach((d, n) => d.classList.toggle('on', n === best)); };
+    row.addEventListener('scroll', () => requestAnimationFrame(update), { passive: true }); update();
+  });
+
+  // section bar: highlight the section on screen and keep its chip in view
+  const chips = $('.subnav a');
+  const secs = chips.map(a => document.querySelector(a.getAttribute('href')));
+  const spy = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return;
+    const n = secs.indexOf(e.target); chips.forEach((c, m) => c.classList.toggle('on', m === n));
+    chips[n] && chips[n].scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' }); }), { rootMargin: '-45% 0px -50% 0px' });
+  secs.forEach(s => s && spy.observe(s));
+  addEventListener('scroll', () => document.body.classList.toggle('night', (() => { const r = document.getElementById('origins').getBoundingClientRect(); return r.top < innerHeight * .5 && r.bottom > innerHeight * .5; })()), { passive: true });
 }
