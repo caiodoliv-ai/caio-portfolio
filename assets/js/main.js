@@ -12,15 +12,22 @@
 const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isMobile = () => innerWidth <= 900;
 const D = Math.PI / 180;
-// Animations run only when the libraries loaded and the viewport is a real screen.
-const ANIM = !!(window.gsap && window.ScrollTrigger && window.THREE) && !REDUCED && innerHeight < (screen.height || 2000) * 2;
+// Two motion modes:
+//   ANIM   desktop/tablet (> 900px): pinned GSAP scroll scenes + globe
+//   MOBILE phones (<= 900px): no pins; light reveal animations on the static layout
+const LIBS = !!(window.gsap && window.ScrollTrigger && window.THREE);
+const PHONE = matchMedia('(max-width: 900px)').matches;
+const ANIM = LIBS && !REDUCED && !PHONE && innerHeight < (screen.height || 2000) * 2;
+const MOBILE = PHONE && !REDUCED && 'IntersectionObserver' in window;
 document.documentElement.classList.toggle('anim', ANIM);
+document.documentElement.classList.toggle('m', MOBILE);
 const TOUCH = !matchMedia('(pointer: fine)').matches;
 
 // Diagnostics: open the site with #debug to see why animations are on or off.
 if (location.hash === '#debug') {
-  const why = !(window.gsap && window.ScrollTrigger && window.THREE) ? 'libraries not loaded'
-    : REDUCED ? 'device asks for reduced motion' : !ANIM ? 'viewport looks unusual' : 'animations on';
+  const why = REDUCED ? 'device asks for reduced motion (static layout)'
+    : MOBILE ? 'mobile animations on' : ANIM ? 'desktop animations on'
+    : !LIBS ? 'libraries not loaded' : 'viewport looks unusual';
   let gl = false; try { gl = !!document.createElement('canvas').getContext('webgl'); } catch (e) {}
   const d = document.createElement('div');
   d.style.cssText = 'position:fixed;left:8px;bottom:8px;z-index:9999;font:12px/1.4 monospace;background:#1F1E1B;color:#F4F1EA;padding:8px 10px;border-radius:8px;max-width:calc(100% - 16px)';
@@ -320,3 +327,96 @@ function frame(now) {
 }
 requestAnimationFrame(frame);
 } // end ANIM
+
+/* =================================================================
+   7. Mobile mode — reveal on view, no pinned scenes
+   ================================================================= */
+if (MOBILE) {
+  const $ = (s, r = document) => [...r.querySelectorAll(s)];
+  const once = (els, fn, margin = '0px 0px -12% 0px') => {
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { io.unobserve(e.target); fn(e.target); } }), { rootMargin: margin });
+    els.forEach(el => io.observe(el));
+  };
+  const ease = t => 1 - Math.pow(1 - t, 3);
+  const tween = (ms, step, done) => { const t0 = performance.now(); const f = now => { const k = Math.min(1, (now - t0) / ms); step(ease(k)); k < 1 ? requestAnimationFrame(f) : done && done(); }; requestAnimationFrame(f); };
+
+  // reveals, with a small stagger between siblings
+  const items = $('.rv, .o-title, .o-map, .o-step, .o-hud, .stat, .scopeline li, .tl-item, .lang, .sig, .col, .pr, .ep');
+  items.forEach(el => {
+    el.classList.add('rvm');
+    const sibs = [...el.parentElement.children].filter(c => c.classList.contains('rvm'));
+    el.style.transitionDelay = (Math.max(0, sibs.indexOf(el)) % 4) * 90 + 'ms';
+  });
+  requestAnimationFrame(() => $('.hero .rvm').forEach(el => el.classList.add('in')));
+  once(items.filter(el => !el.closest('.hero')), el => el.classList.add('in'));
+
+  // counters
+  once($('[data-count]'), el => {
+    const n = +el.dataset.count, pre = el.dataset.prefix || '', suf = el.dataset.suffix || '', plus = !el.hasAttribute('data-plain');
+    tween(1400, k => el.innerHTML = pre + Math.round(n * k) + suf + (plus ? '<sup>+</sup>' : ''));
+  });
+
+  // origins: the route draws and the distance counts up
+  const km = document.getElementById('km');
+  once($('.o-map'), map => {
+    map.classList.add('draw');
+    tween(2000, k => km.textContent = Math.round(7400 * k).toLocaleString('en-US') + ' km');
+  });
+
+  // greeting rotator
+  const words = $('#hello span'); let w = 0;
+  words.forEach((s, i) => s.classList.toggle('on', i === 0));
+  setInterval(() => {
+    words[w].classList.remove('on'); words[w].classList.add('out');
+    const prev = words[w]; setTimeout(() => prev.classList.remove('out'), 700);
+    w = (w + 1) % words.length; words[w].classList.add('on');
+  }, 1800);
+
+  // how I lead: the rider runs the whole track once, checkpoints light up
+  const path = document.getElementById('trackLine'), rider = document.getElementById('rider');
+  if (path && rider) {
+    const L = path.getTotalLength(), CP = [.08, .47, .83], g = document.getElementById('checkpoints');
+    CP.forEach((f, i) => { const p = path.getPointAtLength(f * L);
+      g.insertAdjacentHTML('beforeend', `<g transform="translate(${p.x} ${p.y + 34})"><circle r="15" fill="#F4F1EA" stroke="#C8643B" stroke-width="2" id="cp${i}"/><text y="4.5" fill="#C8643B">0${i + 1}</text></g>`); });
+    path.style.strokeDasharray = L; path.style.strokeDashoffset = L;
+    const at = k => { const l = k * L, a = path.getPointAtLength(l), b = path.getPointAtLength(Math.min(l + 2, L));
+      rider.setAttribute('transform', `translate(${a.x} ${a.y}) rotate(${Math.atan2(b.y - a.y, b.x - a.x) / D})`);
+      path.style.strokeDashoffset = L - l;
+      CP.forEach((f, i) => document.getElementById('cp' + i).setAttribute('fill', k >= f ? '#C8643B' : '#F4F1EA')); };
+    at(0);
+    once($('#bmxView'), () => tween(3200, at), '0px 0px -25% 0px');
+  }
+
+  // closing line draws towards the contacts
+  const jr = document.getElementById('jcr'), jl = document.getElementById('journeyLine'), jd = document.getElementById('journeyDot');
+  if (jr && jl) { const JL = jl.getTotalLength(); jr.setAttribute('width', 0);
+    once($('.journey'), () => tween(1800, k => { const p = jl.getPointAtLength(k * JL); jr.setAttribute('width', p.x + 10); jd.setAttribute('cx', p.x); jd.setAttribute('cy', p.y); })); }
+
+  // small globe in the hero, fading out as you scroll
+  if (window.THREE && window.GLOBE_LAND) try {
+    const canvas = document.getElementById('globe');
+    const r = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    r.setPixelRatio(Math.min(devicePixelRatio, 2));
+    const sc = new THREE.Scene(), cam = new THREE.PerspectiveCamera(32, 1, .1, 100); cam.position.set(0, 0, 14);
+    const tilt = new THREE.Group(), spin = new THREE.Group(); tilt.add(spin); sc.add(tilt);
+    const R = 2, ll = (lat, lon, rr = R) => { const p = (90 - lat) * D, t = (lon + 180) * D; return new THREE.Vector3(-rr * Math.sin(p) * Math.cos(t), rr * Math.cos(p), rr * Math.sin(p) * Math.sin(t)); };
+    spin.add(new THREE.Mesh(new THREE.SphereGeometry(R * .985, 48, 36), new THREE.MeshBasicMaterial({ color: 0xEBE6DB })));
+    const c2 = document.createElement('canvas'); c2.width = c2.height = 64; const x = c2.getContext('2d'); x.beginPath(); x.arc(32, 32, 28, 0, 7); x.fillStyle = '#fff'; x.fill();
+    const pts = [], LAND = window.GLOBE_LAND;
+    for (let i = 0; i < LAND.length; i += 6) { const v = ll(parseInt(LAND.slice(i, i + 3), 36) / 10 - 90, parseInt(LAND.slice(i + 3, i + 6), 36) / 10 - 180, R * 1.002); pts.push(v.x, v.y, v.z); }
+    const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3));
+    spin.add(new THREE.Points(g, new THREE.PointsMaterial({ size: .06, map: new THREE.CanvasTexture(c2), transparent: true, alphaTest: .4, color: 0xB3A794 })));
+    const m = new THREE.Mesh(new THREE.SphereGeometry(.06, 16, 12), new THREE.MeshBasicMaterial({ color: 0xC8643B })); m.position.copy(ll(-7.12, -34.86, R * 1.01)); spin.add(m);
+    tilt.rotation.x = 8 * D;
+    const size = () => { r.setSize(innerWidth, innerHeight, false); cam.aspect = innerWidth / innerHeight; cam.updateProjectionMatrix();
+      const h = Math.tan(16 * D) * 14, wv = h * cam.aspect; tilt.position.set(0, h * .5, 0); tilt.scale.setScalar(Math.min(1, wv / 2.2)); };
+    size(); addEventListener('resize', size);
+    let lon = -20, last = performance.now();
+    const frame = now => { const dt = Math.min((now - last) / 1000, .05); last = now;
+      const op = Math.max(0, 1 - scrollY / (innerHeight * .55)); canvas.style.opacity = op;
+      if (op > 0) { lon += dt * 6; spin.rotation.y = -Math.PI / 2 - lon * D; r.render(sc, cam); }
+      requestAnimationFrame(frame); };
+    requestAnimationFrame(frame);
+    document.documentElement.classList.add('m-globe');
+  } catch (e) { /* no WebGL: the hero simply has no globe */ }
+}

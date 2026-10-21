@@ -53,11 +53,17 @@ Non-pinned triggers (created **after** all pins): nav highlight + progress bar, 
 - `ScrollTrigger.refresh()` runs on `load`, on `document.fonts.ready`, and whenever a `ResizeObserver` sees `<main>` height or the career track width change. Without this, late-loading fonts made the career pin overlap "How I lead".
 - Width-only resizes > 40px trigger a refresh; height-only changes (mobile URL bar) don't.
 
-## Touch devices
+## Motion modes
 
-- `ScrollTrigger.normalizeScroll(true)` on touch screens keeps pinned scenes steady while the mobile address bar moves and during momentum scrolling; `ignoreMobileResize` avoids refreshes on height-only resizes.
-- Pinned scenes are longer on mobile (Origins 280%, How I lead 300%) and **snap** to their key moments (the three origin steps, the three principles) with `inertia: false`, so a quick flick never skips a step.
-- Open the site with `#debug` (e.g. `/index.html#debug`) to show a badge explaining whether animations are on, and why not if they are off (libraries, reduced motion, unusual viewport), plus touch/WebGL support and viewport size.
+| Mode | When | What runs |
+|---|---|---|
+| `html.anim` | Width > 900px, libraries loaded, motion allowed | Pinned GSAP scenes, globe through Origins, Lenis smooth scroll on mouse devices |
+| `html.m` | Width ≤ 900px, motion allowed, IntersectionObserver available | No pins. The static layout plus light effects: reveal on view with a small stagger, counters, the Origins route map drawing with the km counter, greeting rotator, the BMX rider running the whole track once, scope bars, closing line. A small auto-rotating globe sits in the hero and fades out on scroll (`html.m-globe`) |
+| neither | Reduced motion, JavaScript off, libraries missing | Static layout under `html:not(.anim)`; everything readable |
+
+Pinned scroll-scrubbed scenes proved fragile on real phones (momentum scrolling, address bar), so phones get the lighter `m` mode by design. Tablets and small laptops above 900px keep the desktop scenes; on touch screens those use `normalizeScroll` and snapping.
+
+Open the site with `#debug` to show a badge with the active mode and the reason, plus touch/WebGL support and viewport size.
 
 ## Smooth scroll
 

@@ -296,6 +296,59 @@
   html:not(.anim) .dots{display:none}
   html:not(.anim) .hello span+span{display:none}
 
+  /* origins route map (phones and static layout; the globe does this on desktop) */
+  .o-map{display:block;width:100%;max-width:420px;height:auto}
+  .anim .o-map{display:none}
+  .o-route{stroke-dasharray:100;stroke-dashoffset:0}
+
+  /* ---------- mobile mode (html.m): reveal on view, no pinned scenes ---------- */
+  html.m .rvm{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
+  html.m .rvm.in{opacity:1;transform:none}
+  html.m .o-route{stroke-dashoffset:100;transition:stroke-dashoffset 2s cubic-bezier(.2,.8,.2,1) .2s}
+  html.m .o-map.draw .o-route{stroke-dashoffset:0}
+  html.m .scopeline i{transform:scaleX(0);transition:transform 1s cubic-bezier(.2,.8,.2,1) .25s}
+  html.m .scopeline li.in i{transform:none}
+  html.m .hello span:nth-child(n){display:block;position:absolute;left:0;top:0;opacity:0;transform:translateY(100%);transition:transform .7s cubic-bezier(.7,0,.2,1),opacity .7s}
+  html.m .hello span.on{opacity:1;transform:none}
+  html.m .hello span.out{opacity:0;transform:translateY(-100%)}
+  html.m.m-globe #globe{display:block}
+
+  /* ---------- phone spacing for the non-pinned layout ---------- */
+  @media (max-width:900px){
+    h2{font-size:36px}
+    .lead{font-size:16.5px}
+    html:not(.anim) .hero{padding-top:112px;padding-bottom:72px}
+    html.m-globe .hero{padding-top:50vh;justify-content:flex-end}
+    html:not(.anim) .origins{padding:88px 0 72px}
+    html:not(.anim) .origins .wrap{gap:28px}
+    html:not(.anim) .o-step{padding-top:24px;border-top:1px solid #34312c}
+    html:not(.anim) .o-step h2{font-size:30px;margin:10px 0 8px}
+    html:not(.anim) .o-step p{font-size:15.5px}
+    html:not(.anim) .o-hud{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 14px}
+    html:not(.anim) .o-hud small{margin:0}
+    html:not(.anim) .o-hud b{font-size:26px}
+    .numbers{padding-block:88px 72px}
+    .stats{margin-top:40px}
+    .scopeline{margin-top:44px}
+    .path{padding:80px 0 56px}
+    .track{margin-top:32px}
+    html:not(.anim) .lead-sec{padding:80px 0 16px}
+    html:not(.anim) .bmx-view{overflow:visible;margin:28px auto 0}
+    html:not(.anim) .track-svg{width:100%}
+    html:not(.anim) .principles{margin-top:28px;border-top:0;gap:14px}
+    html:not(.anim) .pr{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 18px 20px;gap:6px}
+    html:not(.anim) .pr .n{font-size:32px}
+    html:not(.anim) .pr h3{font-size:24px}
+    .episodes{padding-block:12px 48px}
+    .episodes .grid{gap:14px}
+    .edu,.radar{padding-block:80px}
+    .edu-grid{margin-top:28px;gap:44px}
+    .rd-grid{margin-top:24px;gap:32px}
+    .now{padding-block:88px 72px}
+    .now h2{font-size:42px}
+    .now .note{font-size:20px}
+  }
+
   @media (prefers-reduced-motion:reduce){
     .rv{opacity:1;transform:none}
     .sweep,.blip,.scroll-cue i::after{animation:none}

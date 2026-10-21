@@ -22,7 +22,7 @@ This is Caio de Oliveira's personal site: a static, scroll-driven one-page site 
 - For triggers on pinned sections, use the pin spacer (`box('#id')` helper in `main.js`) as the trigger element.
 - Anything that changes layout after load (fonts, images) must be followed by `ScrollTrigger.refresh()`. A `ResizeObserver` on `<main>` and on the career track already does this; keep it.
 - Use `invalidateOnRefresh: true` and function-based values for anything that depends on viewport size.
-- Mobile (≤ 900px) has its own choreography: native horizontal swipe for the career cards, camera-follow on the BMX track, shorter pins.
+- Phones (≤ 900px) don't use pins at all: they get `html.m` mode (reveal on view, counters, route map, rider run, small hero globe) on top of the static layout. See `docs/ARCHITECTURE.md` → Motion modes. Phone spacing lives in the "phone spacing" block of `main.css`.
 
 ## How to test
 
