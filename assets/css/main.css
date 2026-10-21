@@ -102,7 +102,7 @@
   .scopeline span{font-size:14px;color:var(--ink-2)}
 
   /* ---------- 04 path (career) ---------- */
-  .path{padding:14vh 0 10vh;overflow:hidden}
+  .path{padding:14vh 0 10vh;overflow:hidden;background:var(--paper);z-index:3}
   .path-head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap}
   .path-head .lead{max-width:440px}
   .track{display:flex;gap:22px;margin-top:56px;padding:0 var(--pad);width:max-content}
@@ -127,7 +127,7 @@
   .swipe{display:none;font:500 11px var(--mono);letter-spacing:.14em;color:var(--muted);margin-top:16px;padding:0 var(--pad)}
 
   /* ---------- 05 how I lead (BMX, pinned) ---------- */
-  .lead-sec{height:100vh;height:100svh;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
+  .lead-sec{height:100vh;height:100svh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;background:var(--paper);z-index:4}
   .lead-sec>.wrap{width:100%}
   .lead-head{display:grid;grid-template-columns:1fr auto;gap:30px;align-items:end}
   .lead-head h2{font-size:clamp(36px,4.6vw,68px);max-width:780px}

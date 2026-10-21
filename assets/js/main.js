@@ -41,6 +41,7 @@ let lenis = null;
 if (window.Lenis && window.top === window.self && matchMedia('(pointer: fine)').matches) {
   lenis = window.__lenis = new Lenis({ lerp: .09 });
   lenis.on('scroll', ScrollTrigger.update);
+  ScrollTrigger.addEventListener('refresh', () => lenis.resize());   // keep Lenis' scroll limit in sync with pin spacers
   gsap.ticker.add(t => lenis.raf(t * 1000));
   gsap.ticker.lagSmoothing(0);
 }
@@ -145,7 +146,7 @@ heroPose();
 
 /* ---------------- PINS FIRST, in page order ---------------- */
 // 02 Origins
-const ot = gsap.timeline({ scrollTrigger: { trigger: '#origins', start: 'top top', end: () => isMobile() ? '+=280%' : '+=260%', pin: true, scrub: 1, anticipatePin: 1, invalidateOnRefresh: true,
+const ot = gsap.timeline({ scrollTrigger: { trigger: '#origins', start: 'top top', end: () => isMobile() ? '+=280%' : '+=260%', pin: true, scrub: 1, invalidateOnRefresh: true,
   snap: snapTo([0, .245, .578, .93, 1]) } });   // the three text steps
 gsap.set('.o-step', { y: 30 });
 ot.to(S, { x: 0, y: () => isMobile() ? .3 : .02, scale: () => isMobile() ? .95 : 1.55, lon: -35, lat: -7, idle: 0, labels: 1, duration: 1.2, ease: 'power2.inOut' }, 0)
@@ -162,7 +163,7 @@ const mm = gsap.matchMedia();
 mm.add('(min-width: 901px)', () => {
   const track = document.getElementById('track');
   gsap.to(track, { x: () => -(track.scrollWidth - innerWidth), ease: 'none',
-    scrollTrigger: { trigger: '#path', start: 'top top', end: () => '+=' + (track.scrollWidth - innerWidth), pin: true, scrub: 1, anticipatePin: 1, invalidateOnRefresh: true } });
+    scrollTrigger: { trigger: '#path', start: 'top top', end: () => '+=' + (track.scrollWidth - innerWidth), pin: true, scrub: 1, invalidateOnRefresh: true } });
 });
 
 // 05 How I lead — the rider runs the track, principles change at checkpoints
@@ -198,7 +199,7 @@ mm.add('(min-width: 901px)', () => {
   };
   show(0); draw();
   gsap.to(st, { p: 1, ease: 'none', onUpdate: draw,
-    scrollTrigger: { trigger: '#lead', start: 'top top', end: () => isMobile() ? '+=300%' : '+=200%', pin: true, scrub: .6, anticipatePin: 1, invalidateOnRefresh: true, onRefresh: draw,
+    scrollTrigger: { trigger: '#lead', start: 'top top', end: () => isMobile() ? '+=300%' : '+=200%', pin: true, scrub: .6, invalidateOnRefresh: true, onRefresh: draw,
       snap: snapTo([0, .22, .58, .93, 1]) } });   // the three principles
 })();
 
