@@ -159,7 +159,8 @@ gsap.set('.o-step', { y: 30 });
 ot.to(S, { x: 0, y: () => isMobile() ? .3 : .02, scale: () => isMobile() ? .95 : 1.55, lon: -35, lat: -7, idle: 0, labels: 1, duration: 1.2, ease: 'power2.inOut' }, 0)
   .to('[data-step="0"]', { opacity: 1, y: 0, duration: .5 }, .5)
   .to('[data-step="0"]', { opacity: 0, y: -20, duration: .4 }, 1.6)
-  .to(S, { route: 1, lon: 8, lat: 38, duration: 2.2, ease: 'power1.inOut' }, 1.5)
+  // end framed on the midpoint of the route, so João Pessoa and Verona are both in view
+  .to(S, { route: 1, lon: -12, lat: 22, duration: 2.2, ease: 'power1.inOut' }, 1.5)
   .to('[data-step="1"]', { opacity: 1, y: 0, duration: .5 }, 2.0)
   .to('[data-step="1"]', { opacity: 0, y: -20, duration: .4 }, 3.4)
   .to('[data-step="2"]', { opacity: 1, y: 0, duration: .5 }, 3.8)
@@ -302,11 +303,14 @@ function place(el, o, show) {
 function frame(now) {
   const dt = Math.min((now - last) / 1000, .05); last = now;
   if (!REDUCED) drift += dt * 6 * S.idle;
+  // keep the idle spin within ±180° so leaving the hero never needs a long catch-up turn
+  if (S.idle > .999) drift = ((drift + 180) % 360 + 360) % 360 - 180;
   const h = Math.tan(camera.fov * D / 2) * camera.position.z, w = h * camera.aspect;
   root.position.set(S.x * w, S.y * h, 0);
   root.scale.setScalar(S.scale);
   tilt.rotation.x = S.lat * D;
-  spin.rotation.y = -Math.PI / 2 - (S.lon - drift) * D;
+  // the idle drift fades out with S.idle, so the origins scene always lands on the same pose
+  spin.rotation.y = -Math.PI / 2 - (S.lon - drift * S.idle) * D;
   ballMat.color.copy(COL.dayBall).lerp(COL.nightBall, S.dark);
   dotMat.color.copy(COL.dayDot).lerp(COL.nightDot, S.dark);
   canvas.style.opacity = S.op;
