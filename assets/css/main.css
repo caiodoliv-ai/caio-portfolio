@@ -319,7 +319,7 @@
     h2{font-size:34px;line-height:1.08;letter-spacing:-.015em}
     .lead{font-size:16.5px;line-height:1.55}
     #globe,.scroll-cue,.meta-strip,.o-map,.o-hud,.o-step[data-step="2"],.scopeline,.bmx-view,.dots,.plate,
-    .hello,.journey,.now .portrait,#radar,.swipe,.track-txt,.pr small,.dotsbar{display:none!important}
+    .hello,.journey,.now .portrait,#radar,.track-txt,.pr small,.dotsbar{display:none!important}
 
     /* nav: logo + CV only */
     .nav{background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(12px)}
@@ -351,24 +351,21 @@
     html:not(.anim) .o-step h2{font-size:28px;margin:8px 0 8px}
     html:not(.anim) .o-step p{font-size:15.5px}
 
-    /* 4 career: vertical list with "Details" */
+    /* 4 career: swipeable cards, like the desktop slider */
     .path{padding:var(--sec) 0 32px}
     .path-head{display:block}
     .path-head .lead{margin-top:12px}
-    .track{display:block;width:auto;overflow:visible;margin:24px 0 0;padding:0 var(--pad)}
-    .spec,.spec.dark{width:auto;background:none;color:inherit;border:0;border-top:1px solid var(--line);border-radius:0;padding:18px 0 16px}
-    .spec:last-child{border-bottom:1px solid var(--line)}
-    .spec.dark .co,.spec.dark ul{color:var(--ink-2)}
-    .spec.dark .spec-top{color:var(--muted)}
-    .spec.dark .kv,.spec.dark .kv div+div{border-color:var(--line)}
-    .spec h3{font-size:23px;margin:8px 0 2px}
-    .spec .co{font-size:14px}
-    html.m .spec .kv,html.m .spec ul,html.m .spec .ph,html.m .spec .highlight{display:none}
-    html.m .spec.open .kv{display:grid}
-    html.m .spec.open ul{display:grid}
-    html.m .spec.open .ph,html.m .spec.open .highlight{display:block}
-    .more{align-self:flex-start;text-align:left;margin-top:10px;font:600 13px var(--sans);color:var(--clay);background:none;border:0;padding:4px 0;cursor:pointer}
-    .kv{margin:14px 0 12px}.kv b{font-size:24px}
+    .track{display:flex;gap:12px;width:auto;margin:24px 0 0;padding:0 var(--pad) 10px;overflow-x:auto;overscroll-behavior-x:contain;
+      scroll-snap-type:x mandatory;scroll-padding-inline:var(--pad);-webkit-overflow-scrolling:touch;scrollbar-width:none;transform:none!important}
+    .track::-webkit-scrollbar{display:none}
+    .spec{width:84vw;max-width:400px;flex:none;scroll-snap-align:start;border-radius:20px;padding:20px 18px 18px}
+    .spec h3{font-size:24px;margin:14px 0 2px}
+    .spec .co{font-size:13.5px}
+    .spec ul{font-size:14px;gap:6px}
+    .highlight{font-size:13.5px}
+    .kv{margin:16px 0 14px}.kv b{font-size:clamp(19px,6vw,24px);white-space:nowrap}
+    .kv span{font-size:8.5px}
+    .swipe{display:block;margin-top:6px}
 
     /* 5 how I lead: numbered list */
     html:not(.anim) .lead-sec{height:auto;padding:var(--sec) 0 8px}

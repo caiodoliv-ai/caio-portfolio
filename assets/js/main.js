@@ -334,18 +334,11 @@ requestAnimationFrame(frame);
 
 /* =================================================================
    7. Phone mode — "the CV in your pocket": one column, no scenes.
-      Only a light fade on section heads and "Details" on career items.
+      Only a light fade on section heads; career cards swipe sideways.
    ================================================================= */
 if (MOBILE) {
   const heads = [...document.querySelectorAll('main h2, main section > .eyebrow, .path-head .eyebrow, .lead-head .eyebrow')];
   heads.forEach(h => h.classList.add('fade'));
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
   heads.forEach(h => io.observe(h));
-
-  document.querySelectorAll('#track .spec').forEach(card => {
-    const b = document.createElement('button');
-    b.type = 'button'; b.className = 'more'; b.textContent = 'Details +'; b.setAttribute('aria-expanded', 'false');
-    b.addEventListener('click', () => { const open = card.classList.toggle('open'); b.textContent = open ? 'Less −' : 'Details +'; b.setAttribute('aria-expanded', String(open)); });
-    card.appendChild(b);
-  });
 }
