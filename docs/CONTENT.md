@@ -10,7 +10,7 @@ Every text on the site lives in `index.html` (and `cv.html` for the classic CV).
 | 02 | Origins (`#origins`) | João Pessoa → Italy (2002) → two cultures | Three text steps, distance counter (7,400 km) |
 | 03 | Numbers (`#numbers`) | A wider scope every time | 6+ cross-functional teams · 7+ years · 100K+ email & CRM audience · €3M+ budgets, plus the scope line Team → Organisation → Brands & budget → Business |
 | 04 | Career (`#path`) | *The path so far.* — two industries, one method | Five cards, newest first |
-| 05 | How I lead (`#lead`) | What racing taught me about leading | Three principles + two episode cards |
+| 05 | How I lead (`#lead`) | What racing taught me about leading | Three principles (track line + work line) |
 | 06 | Education (`#education`) | Degrees, thesis, languages | Rotating greeting: Ciao · Olá · Hello · Hola |
 | 07 | Radar (`#radar`) | On my radar — continuous learning | Four signals |
 | 08 | Right now (`#now`) | Let's build what's next | Now · Learning · Exploring, personal note, contacts |
@@ -21,7 +21,6 @@ Search the code for `PLACEHOLDER` to find each one.
 
 | Where | What is needed | Notes |
 |---|---|---|
-| How I lead → episodes | A race moment + the same lesson at work | 2–3 sentences each, first person |
 | Radar → next signal | What you're exploring right now | e.g. a course, a tool, a project |
 | `<head>` | Final domain | Update `og:url` and the `og:image` URL when the custom domain is live |
 

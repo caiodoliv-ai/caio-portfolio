@@ -150,11 +150,6 @@
   .dots{display:flex;gap:8px;position:absolute;left:0;top:104px;z-index:1}   /* under the principle number, never on it */
   .dots i{width:28px;height:3px;border-radius:2px;background:var(--line);transition:background .3s}
   .dots i.on{background:var(--clay)}
-  .episodes{padding-block:8vh 4vh}
-  .episodes .grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:20px}
-  .ep{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px}
-  .ep small{font:600 10.5px var(--mono);letter-spacing:.14em;color:var(--clay);text-transform:uppercase}
-  .ep p{margin-top:10px}
 
   /* ---------- 06 education ---------- */
   .edu{padding-block:14vh}
@@ -256,7 +251,7 @@
     .pr{grid-template-columns:1fr;gap:6px;padding-top:16px}
     .pr .n{font-size:40px}
     .pr h3{font-size:28px}
-    .episodes .grid,.edu-grid,.rd-grid,.now-grid,.cols{grid-template-columns:1fr}
+    .edu-grid,.rd-grid,.now-grid,.cols{grid-template-columns:1fr}
     .col+.col{padding-left:0;border-left:0;border-top:1px solid var(--line)}
     .sig{grid-template-columns:1fr;gap:4px}
     .scope{max-width:300px;margin:0 auto}
@@ -366,7 +361,7 @@
     .swipe{display:block;margin-top:6px}
 
     /* 5 how I lead: numbered list */
-    html:not(.anim) .lead-sec{height:auto;padding:var(--sec) 0 8px}
+    html:not(.anim) .lead-sec{height:auto;padding:var(--sec) 0 var(--sec)}
     .lead-head{display:block}
     .lead-head h2{font-size:34px}
     .lead-head p{font-size:15.5px;margin-top:10px}
@@ -375,8 +370,6 @@
     html:not(.anim) .pr .n{font-size:26px;grid-row:span 2}
     html:not(.anim) .pr h3{font-size:22px}
     html:not(.anim) .pr p{font-size:15px}
-    .episodes{padding-block:20px var(--sec)}
-    .episodes .grid{gap:12px}
 
     /* 6 education */
     .edu{padding-block:0 var(--sec)}
