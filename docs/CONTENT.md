@@ -12,17 +12,15 @@ Every text on the site lives in `index.html` (and `cv.html` for the classic CV).
 | 04 | Career (`#path`) | *The path so far.* — two industries, one method | Five cards, newest first |
 | 05 | How I lead (`#lead`) | What racing taught me about leading | Three principles (track line + work line) |
 | 06 | Education (`#education`) | Degrees, thesis, languages | Rotating greeting: Ciao · Olá · Hello · Hola |
-| 07 | Radar (`#radar`) | On my radar — continuous learning | Four signals |
+| 07 | Radar (`#radar`) | On my radar — continuous learning | Three signals |
 | 08 | Right now (`#now`) | Let's build what's next | Now · Learning · Exploring, personal note, contacts |
 
 ## Open placeholders
 
-Search the code for `PLACEHOLDER` to find each one.
+None right now. If a fact is missing, add a `PLACEHOLDER` label in the code and list it here.
 
 | Where | What is needed | Notes |
 |---|---|---|
-| Radar → next signal | What you're exploring right now | e.g. a course, a tool, a project |
-| `<head>` | Final domain | Update `og:url` and the `og:image` URL when the custom domain is live |
 
 ## Texts written as drafts (to validate)
 

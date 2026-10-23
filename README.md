@@ -6,7 +6,7 @@ A one-page, scroll-driven personal site that tells my story as a sequence of sce
 
 - **Stack:** plain HTML, CSS and JavaScript. No build step, no framework.
 - **Motion:** GSAP + ScrollTrigger (scroll scenes), Lenis (smooth scroll on desktop), three.js (dotted globe). All self-hosted in `assets/js/vendor/`.
-- **Hosting:** GitHub → Cloudflare (Workers static assets). Live at https://caio-portfolio.caiodoliv.workers.dev
+- **Hosting:** GitHub → Cloudflare (Workers static assets). Live at https://caiodoliv.com (custom domain on the Worker; caio-portfolio.caiodoliv.workers.dev still works)
 
 ---
 

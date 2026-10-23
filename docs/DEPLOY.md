@@ -2,7 +2,7 @@
 
 The site is fully static: no build step. Cloudflare serves the repository root as static assets.
 
-**Live:** https://caio-portfolio.caiodoliv.workers.dev
+**Live:** https://caiodoliv.com (Worker custom domain, also www) · fallback https://caio-portfolio.caiodoliv.workers.dev
 
 ## 1. Repository
 
