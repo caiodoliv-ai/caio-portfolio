@@ -8,7 +8,7 @@ Every text on the site lives in `index.html` (and `cv.html` for the classic CV).
 |---|---|---|---|
 | 01 | Hero (`#hero`) | *Always in motion.* + positioning line | Meta strip: Verona · 7+ yrs · Sport retail & aviation |
 | 02 | Origins (`#origins`) | João Pessoa → Italy (2002) → two cultures | Three text steps, distance counter (7,400 km) |
-| 03 | Numbers (`#numbers`) | A wider scope every time | 7+ years · €2M+ budgets · 6+ cross-functional teams · 100K+ audience, plus the scope line Team → Organisation → Brands & budget → Business |
+| 03 | Numbers (`#numbers`) | A wider scope every time | 6+ cross-functional teams · 7+ years · 100K+ email & CRM audience · €3M+ budgets, plus the scope line Team → Organisation → Brands & budget → Business |
 | 04 | Career (`#path`) | *The path so far.* — two industries, one method | Five cards, newest first |
 | 05 | How I lead (`#lead`) | What racing taught me about leading | Three principles + two episode cards |
 | 06 | Education (`#education`) | Degrees, thesis, languages | Rotating greeting: Ciao · Olá · Hello · Hola |
@@ -51,7 +51,7 @@ Search the code for `PLACEHOLDER` to find each one.
 | Bachelor's | Communication & Media, IUSVE Venice · 2018 – 2022 · thesis R.E.D. |
 | Course | Psychology & the Science of Well-Being, Yale (online) · 2020 |
 | Languages | Italian (native), Portuguese (native), English (C1), Spanish (C1) |
-| Key numbers | 7+ years in marketing · €2M+ marketing/media budgets managed (Decathlon era) · 6+ cross-functional teams led · 100K+ email subscribers · 5+ co-marketing partners |
+| Key numbers | 7+ years in marketing · €3M+ marketing/media budgets managed (Decathlon era) · 6+ cross-functional teams led · 100K+ email subscribers · 5+ co-marketing partners |
 | Leadership | Functional, cross-functional leadership across teams of mixed seniority |
 | BMX | Semi-professional BMX racing · 2009–2021 · Italy & Europe · 12 seasons |
 | Contacts shown | caiodoliv@gmail.com · linkedin.com/in/caiodoliv (no phone, no address) |
